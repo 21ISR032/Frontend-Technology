@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+body {width: 5000px}
+button {position:fixed}
+</style>
+
+<body>
+<h1>The Window Object</h1>
+<h2>The scrollBy() Method</h2>
+
+<p>Click to scroll the document.</p>
+
+<p>Look at the horizontal scrollbar to see the effect.</p>
+
+<button onclick="scrollWin()" style="position:fixed">Scroll 100px horizontally!</button>
+<br><br>
+
+<script>
+function scrollWin() {
+  window.scrollBy(100, 0);
+}
+</script>
+
+</body>
+</html>

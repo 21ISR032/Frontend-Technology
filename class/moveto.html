@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The Window Object</h1>
+<h2>The moveTo() Method</h2>
+
+<p>Open "myWindow" and move it to the position 500 x 100:</p>
+
+<button onclick="openWin()">Open "myWindow"</button>
+<button onclick="moveWin()">Move "myWindow"</button>
+
+<script>
+let myWindow;
+
+function openWin() {
+  myWindow=window.open("", "", "width=400, height=200");
+}
+
+function moveWin() {
+  myWindow.moveTo(500, 100);
+}
+</script>
+
+</body>
+</html>

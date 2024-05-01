@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    background-image: url('https://d2r55xnwy6nx47.cloudfront.net/uploads/2020/03/RockPaperScissor-2880x1620_Lede.jpg');
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.header {
+    background-color: #220030;
+    color: #fff; 
+    text-align: center;
+    padding: 1px;
+    font-weight: bold;
+}
+.main-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 40px;
+}
+.feature {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 30%;
+    margin: 10px;
+    transition: transform 0.3s;
+}
+.feature:hover {
+    transform: scale(1.05);
+}
+.cta {
+    text-align: center;
+    margin-top: 20px;
+}
+#ctaButton {
+    padding: 15px 30px;
+    font-size: 35px;
+    margin: 13%;
+    background-color: yellowgreen;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#ctaButton:hover {
+    background-color: #0a0a0a;
+}
+#myElement {
+    width: 300px;
+    height: 200px;
+}

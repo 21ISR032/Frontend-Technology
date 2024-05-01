@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level</title>
+</head>
+<body> 
+    <h1>Login successful!!!</h1>
+    <p id="paragraph"></p>
+    <a href="form validation.html">Go back to login</a>
+     <script>
+        const paragraph = document.querySelector('#paragraph');
+        const params = new URLSearchParams(window.location.search);
+        params.forEach((value, key)=>{
+            paragraph.append(`${key} = ${value}`);
+            paragraph.append(document.createElement('br'));
+        });
+    </script>
+</body>
+</html>

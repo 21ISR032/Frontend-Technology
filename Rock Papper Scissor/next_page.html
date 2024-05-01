@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Summary</title>
+    <style>
+        /* Global styles */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            background-image: url('bg.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Content container */
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgb(196, 235, 243);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center text */
+        }
+
+        /* Headings */
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve URL parameters
+            var urlParams = new URLSearchParams(window.location.search);
+            var name = urlParams.get('name');
+            var email = urlParams.get('email');
+            var message = urlParams.get('message');
+            var selectedRadio = urlParams.get('selectedRadio');
+            var feedbackEmoji = urlParams.get('feedbackEmoji');
+            
+            // Display form data on the new page
+            document.getElementById('nameDisplay').textContent = name || 'Not provided';
+            document.getElementById('emailDisplay').textContent = email || 'Not provided';
+            document.getElementById('messageDisplay').textContent = message || 'Not provided';
+            document.getElementById('selectedRadioDisplay').textContent = selectedRadio || 'Not provided';
+            document.getElementById('feedbackEmojiDisplay').textContent = feedbackEmoji || 'Not provided';
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Feedback Summary</h1>
+        <p>Thank you <span id="nameDisplay"></span> for submitting this valuable feedback!</p>
+        <p>Your details are:<br></p>
+        <p>Email: <span id="emailDisplay"></span></p>
+        <p>Message: <span id="messageDisplay"></span></p>
+        <p>Shared publicly: <span id="selectedRadioDisplay"></span></p>
+        <p>Feedback Emoji: <span id="feedbackEmojiDisplay"></span></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game - Multiplayer</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 10px;
+            padding: 0;
+            background-color: white;
+            background-image: url('bg1.avif');
+            position: fixed;
+            top: -52px;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 400px; /* Adjust width as needed */
+        }
+        .circle-container {
+            position: relative;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .choice {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            transition: filter 0.3s ease-in-out; /* Add transition effect */
+        }
+        .choice:hover {
+            filter: brightness(1.2); /* Change brightness on hover */
+        }
+        .header {
+            background-color: #220030;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            width: 100%;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            display: none; 
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container"> 
+        <div>
+            <div class="header" id="player-turn-header">
+                <p>Player 1's Turn</p> 
+            </div>
+            <div class="circle-container">
+                <img src="s1.png" class="choice" data-choice="scissors" alt="">
+                <img src="p1.png" class="choice" data-choice="paper" alt="">
+                <img src="rock_f-01.png" class="choice" data-choice="rock" alt="">
+            </div>
+            <div class="header">
+                <p>Player 2's Turn</p>
+            </div>
+            <div class="circle-container">
+                <img src="s1.png" class="choice" data-choice="scissors" alt="">
+                <img src="p1.png" class="choice" data-choice="paper" alt="">
+                <img src="rock_f-01.png" class="choice" data-choice="rock" alt="">
+            </div>
+        </div>
+        <div id="result"></div>
+    </div>
+    <audio id="sound-win">
+        <source src="win.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound-lose">
+        <source src="lose.wav" type="audio/mpeg">
+    </audio>
+    <audio id="sound-draw">
+        <source src="draw.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(".choice").click(function() {
+            var playerChoice = $(this).data("choice");
+            var currentPlayer = $("#player-turn-header").text().trim();
+            var nextPlayer = currentPlayer === "Player 1's Turn" ? "Player 2's Turn" : "Player 1's Turn";
+            $("#player-turn-header").text(nextPlayer);
+
+            if (currentPlayer === "Player 1's Turn") {
+                localStorage.setItem("player1Choice", playerChoice);
+            } else {
+                localStorage.setItem("player2Choice", playerChoice);
+                evaluateResult();
+            }
+        });
+
+        function evaluateResult() {
+            var player1Choice = localStorage.getItem("player1Choice");
+            var player2Choice = localStorage.getItem("player2Choice");
+
+            if (!player1Choice || !player2Choice) return;
+
+            if (player1Choice === player2Choice) {
+                displayResult("It's a draw!");
+            } else if (
+                (player1Choice === "rock" && player2Choice === "scissors") ||
+                (player1Choice === "paper" && player2Choice === "rock") ||
+                (player1Choice === "scissors" && player2Choice === "paper")
+            ) {
+                displayResult("Player 1 wins!");
+            } else {
+                displayResult("Player 2 wins!");
+            }
+            localStorage.removeItem("player1Choice");
+            localStorage.removeItem("player2Choice");
+        }
+
+        function displayResult(result) {
+            $("#result").text(result).fadeIn("slow").delay(1000).fadeOut("slow");
+            playSound(result.includes("draw") ? "sound-draw" : (result.includes("Player 1") ? "sound-win" : "sound-lose"));
+        }
+
+        function playSound(soundId) {
+            var sound = document.getElementById(soundId);
+            sound.play();
+        }
+    </script>
+</body>
+</html>

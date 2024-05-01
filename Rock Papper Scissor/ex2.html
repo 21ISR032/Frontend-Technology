@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>,
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORM VALIDATION</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/2bbac3a66c.js" crossorigin="anonymous" ></script>
+    <style>
+        /* * {
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+} */
+
+body {
+    background: yellowgreen;
+    font-family: 'Poppins', sans-serif;
+}
+
+#create-account-form {
+    width: 450px;
+    height: 560px;
+    margin: 15vh auto 0 auto;
+    padding: 5px 10px;
+    background-color: whitesmoke;
+    border-radius: px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+.panda-face {
+    height: 7.5em;
+    width: 8.4em;
+    background-color: white;
+    border: 0.18em solid black;
+    border-radius: 7.5em 7.5em 5.62em 5.62em;
+    position: absolute;
+    top: 4em;
+    margin: auto;
+    left: 0;
+    right: 0;
+  }
+  .ear-l,
+  .ear-r {
+    background-color: black;
+    height: 2.5em;
+    width: 2.81em;
+    border: 0.18em solid black;
+    border-radius: 2.5em 2.5em 0 0;
+    top: 3.75em;
+    position:absolute;
+  }
+  .ear-l {
+    transform: rotate(-38deg);
+    left: 66.65em;
+    position:absolute;
+  }
+  .ear-r {
+    transform: rotate(38deg);
+    right: 66.65em;
+    position:absolute;
+  }
+  .blush-l,
+  .blush-r {
+    background-color: pink;
+    height: 1em;
+    width: 1.37em;
+    border-radius: 50%;
+    position: absolute;
+    top: 4em;
+  }
+  .blush-l {
+    transform: rotate(25deg);
+    left: 1em;
+  }
+  .blush-r {
+    transform: rotate(-25deg);
+    right: 1em;
+  }
+  .eye-l,
+  .eye-r {
+    background-color: black;
+    height: 2.18em;
+    width: 2em;
+    border-radius: 2em;
+    position: absolute;
+    top: 2.18em;
+  }
+  .eye-l {
+    left: 1.37em;
+    transform: rotate(-20deg);
+  }
+  .eye-r {
+    right: 1.37em;
+    transform: rotate(20deg);
+  }
+  .eyeball-l,
+  .eyeball-r {
+    height: 0.6em;
+    width: 0.6em;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    left: 0.6em;
+    top: 0.6em;
+    transition: 1s all;
+  }
+  .eyeball-l {
+    transform: rotate(20deg);
+  }
+  .eyeball-r {
+    transform: rotate(-20deg);
+  }
+  .nose {
+    height: 1em;
+    width: 1em;
+    background-color: black;
+    position: absolute;
+    top: 4.37em;
+    margin: auto;
+    left: 0;
+    right: 0;
+    border-radius: 1.2em 0 0 0.25em;
+    transform: rotate(45deg);
+  }
+  .nose:before {
+    content: "";
+    position: absolute;
+    background-color: black;
+    height: 0.6em;
+    width: 0.1em;
+    transform: rotate(-45deg);
+    top: 0.75em;
+    left: 1em;
+  }
+  .mouth,
+  .mouth:before {
+    height: 0.75em;
+    width: 0.93em;
+    background-color: transparent;
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0.18em black;
+  }
+  .mouth {
+    top: 5.31em;
+    left: 3.23em;
+  }
+  .mouth:before {
+    content: "";
+    position: absolute;
+    left: 0.87em;
+  }
+  .hand-l,
+  .hand-r {
+    background-color: black;
+    height: 2.81em;
+    width: 2.5em;
+    border: 0.18em solid black;
+    border-radius: 0.6em 0.6em 2.18em 2.18em;
+    transition: 1s all;
+    position: absolute;
+    top: 11.4em;
+  }
+  .hand-l {
+    left: 57.5em;
+  }
+  .hand-r {
+    right: 57.5em;
+  }
+  .paw-l,
+  .paw-r {
+    background-color: black;
+    height: 3.12em;
+    width: 3.12em;
+    border: 0.18em solid black;
+    border-radius: 2.5em 2.5em 1.2em 1.2em;
+    position: absolute;
+    /* top: 30.5em; */
+    top: 57.2em
+  }
+  .paw-l {
+    left: 55em;
+  }
+  .paw-r {
+    right: 55em;
+  }
+  .paw-l:before,
+  .paw-r:before {
+    position: absolute;
+    content: "";
+    background-color: white;
+    height: 1.37em;
+    width: 1.75em;
+    top: 1.12em;
+    left: 0.55em;
+    border-radius: 1.56em 1.56em 0.6em 0.6em;
+  }
+  .paw-l:after,
+  .paw-r:after {
+    position: absolute;
+    content: "";
+    background-color: white;
+    height: 0.5em;
+    width: 0.5em;
+    border-radius: 50%;
+    top: 0.31em;
+    left: 1.12em;
+    box-shadow: 0.87em 0.37em white, -0.87em 0.37em white;
+  }
+  @media screen and (max-width: 500px) {
+    .container {
+      font-size: 14px;
+    }
+  }
+.input-group {
+    display:flex;
+     position: relative;
+    flex-direction: column;
+    box-sizing: border-box;
+    font-size: 15px;
+width: 100%;
+height: 200%;
+
+}
+
+.input-group label {
+    display:inline-block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    border: 2px solid #f0f0f0;
+	border-radius: 2px;
+	display: block;
+	font-size: 12px;
+	padding: 20px;
+	width: 90%; 
+    height: 2px; 
+}
+.input-group input:focus {
+    outline: 0;
+}
+.error input {
+    border:3px red solid;
+}
+
+.success input {
+    border:3px green solid;
+}
+
+ .input-group i {
+     position:absolute;
+     right:10px;
+     top:35px;
+     visibility: hidden;
+ }
+
+
+ .success i.fa-check-circle{
+     visibility: visible;
+     color:green;
+ }
+
+ .error i.fa-exclamation-circle {
+    visibility: visible;
+    color:red;
+}
+
+
+ .input-group p {
+     font-size: 15px;
+     color:red;
+     visibility: hidden;
+ }
+
+ .error p {
+     visibility: visible;
+ }
+
+ .btn {
+     width:100%;
+     padding:10px;
+     font-size: 10px;
+     background-color: yellowgreen;
+     color:#010101;
+     text-transform: uppercase bold;
+     border:none;
+ }
+    </style>
+</head>
+<body>
+    <form  id="create-account-form" action="ex3.html" method="GET">
+      <div class="container">  
+        <div class="title">
+            <h2 align="center">Rock Papper Scissor</h2>
+        </div>
+        <div class="input-group">
+            <label for="username">Nickname</label>
+            <input type="text" id="username" placeholder="Name" name="username">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+            <p>Error Message</p>
+        </div>
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Email" name="email">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+            <p>Error Message</p>
+        </div>
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Password" name="password">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+            <p>Error Message</p>
+        </div>
+        <div class="input-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" placeholder="Password" name="confirmpassword">
+            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-exclamation-circle"></i>
+            <p>Error Message</p>
+        </div>
+
+        <button type="submit" class="btn">Submit</button>
+    </form>
+    <div class="ear-l"></div>
+    <div class="ear-r"></div>
+    <div class="panda-face">
+      <div class="blush-l"></div>
+      <div class="blush-r"></div>
+      <div class="eye-l">
+        <div class="eyeball-l"></div>
+      </div>
+      <div class="eye-r">
+        <div class="eyeball-r"></div>
+      </div>
+      <div class="nose"></div>
+      <div class="mouth"></div>
+    </div>
+    <div class="hand-l"></div>
+    <div class="hand-r"></div>
+    <div class="paw-l"></div>
+    <div class="paw-r"></div>
+</div>
+
+    <script>
+        const form = document.querySelector('#create-account-form');
+const usernameInput = document.querySelector('#username');
+const emailInput = document.querySelector('#email');
+const passwordInput = document.querySelector('#password');
+const confirmPasswordInput = document.querySelector('#confirm-password');
+
+form.addEventListener('submit', (event)=>{
+    
+    validateForm();
+    console.log(isFormValid());
+    if(isFormValid()==true){
+        form.submit();
+     }else {
+         event.preventDefault();
+     }
+
+});
+
+function isFormValid(){
+    const inputContainers = form.querySelectorAll('.input-group');
+    let result = true;
+    inputContainers.forEach((container)=>{
+        if(container.classList.contains('error')){
+            result = false;
+        }
+    });
+    return result;
+}
+
+function validateForm() {
+
+    if(usernameInput.value.trim()==''){
+        setError(usernameInput, 'Name can not be empty');
+    }else if(usernameInput.value.trim().length <5 || usernameInput.value.trim().length > 15){
+        setError(usernameInput, 'Name must be min 5 and max 15 charecters');
+    }else {
+        setSuccess(usernameInput);
+    }
+
+    if(emailInput.value.trim()==''){
+        setError(emailInput, 'Provide email address');
+    }else if(isEmailValid(emailInput.value)){
+        setSuccess(emailInput);
+    }else{
+        setError(emailInput, 'Provide valid email address');
+    }
+
+    if(passwordInput.value.trim()==''){
+        setError(passwordInput, 'Password can not be empty');
+    }else if(passwordInput.value.trim().length <6 || passwordInput.value.trim().length >20){
+        setError(passwordInput, 'Password min 6 max 20 charecters');
+    }else {
+        setSuccess(passwordInput);
+    }
+    if(confirmPasswordInput.value.trim()==''){
+        setError(confirmPasswordInput, 'Password can not be empty');
+    }else if(confirmPasswordInput.value !== passwordInput.value){
+        setError(confirmPasswordInput, 'Password does not match');
+    }else {
+        setSuccess(confirmPasswordInput);
+    }
+}
+
+function setError(element, errorMessage) {
+    const parent = element.parentElement;
+    if(parent.classList.contains('success')){
+        parent.classList.remove('success');
+    }
+    parent.classList.add('error');
+    const paragraph = parent.querySelector('p');
+    paragraph.textContent = errorMessage;
+}
+
+function setSuccess(element){
+    const parent = element.parentElement;
+    if(parent.classList.contains('error')){
+        parent.classList.remove('error');
+    }
+    parent.classList.add('success');
+}
+
+function isEmailValid(email){
+    const reg =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+    return reg.test(email);
+}
+
+
+
+
+    </script>
+</body>
+</html>
+
+<!-- 
+
+    <i class="fas fa-check-circle"></i>
+    <i class="fas fa-exclamation-circle"></i>
+
+ -->

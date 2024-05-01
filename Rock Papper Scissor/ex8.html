@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+       body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 10px;
+            padding: 0;
+            background-color: white;
+            background-image: url('bg1.avif');
+            position: fixed;
+            top: -52px;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .circle-container {
+            position: relative;
+            margin-top: 100px;
+            width: 200px;
+            height: 200px;
+        }
+        .choice {
+            border-radius: 50%;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            transform-origin: center center;
+            transition: filter 0.3s ease-in-out; /* Add transition effect */
+        }
+        .choice:hover {
+            filter: brightness(1.2); /* Change brightness on hover */
+        }
+        .choice:nth-child(1) {
+            transform: rotate(0deg) translate(100px) rotate(0deg);
+        }
+        .choice:nth-child(2) {
+            transform: rotate(120deg) translate(100px) rotate(-120deg);
+        }
+        .choice:nth-child(3) {
+            transform: rotate(240deg) translate(100px) rotate(-240deg);
+        }
+        /* .header {
+            background-color: #220030;
+            color: #fff;
+            text-align: center;
+            padding: 30px;
+            margin-left: -350%;
+            font-weight: bold;
+            width: 800%;
+            height: 500%;
+            box-sizing: border-box;
+        } */
+        #game-container {
+            margin-top: -60px;
+            text-align: center;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            display: none; 
+            color: white;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #220030;
+            color: white;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            margin-left: 10px; /* Adjust the margin as needed for more space */
+    color: white; /* Change a tag color to white */
+    text-decoration: none;
+        }
+        .sound-toggle {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop id="video-bg">
+        <source src="home.mp4" type="video/mp4">
+    </video>
+    <div class="navbar">
+        <h1>Rock Paper Scissors Game</h1>
+        <a href="http://localhost:4200">Players</a>
+        <a href="ex5.html">Feedback</a>
+        <a href="http://localhost/form/">Contact</a>
+        <div class="sound-toggle" id="sound-toggle">
+            Sound: <span id="sound-status">ON</span>
+            <audio id="background-music" loop>
+                <source src="bg.mp3" type="audio/mpeg">
+            </audio>
+            
+        </div>
+    </div>
+    <div id="game-container"> 
+        <div>
+           
+            <div class="header">
+                <h1>CHOOSE YOUR WISH</h1>
+            </div>
+            <div class="button-container">
+                <button id="single-player-btn">Single Player</button>
+                <button id="multiplayer-btn">Multiplayer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var soundStatus = true; // Sound initially ON
+            var soundToggle = $("#sound-toggle");
+            var soundSpan = $("#sound-status");
+            var backgroundMusic = $("#background-music")[0]; // Get the audio element
+    
+            // Function to toggle sound status
+            function toggleSound() {
+                soundStatus = !soundStatus;
+                if (soundStatus) {
+                    soundSpan.text("ON");
+                    backgroundMusic.play(); // Play background music
+                } else {
+                    soundSpan.text("OFF");
+                    backgroundMusic.pause(); // Pause background music
+                }
+            }
+    
+            // Event listener for sound toggle click
+            soundToggle.click(function() {
+                toggleSound();
+            });
+
+            // Redirect to singleplayer.html when Single Player button is clicked
+            $("#single-player-btn").click(function() {
+                window.location.href = "single.html";
+            });
+
+            // Redirect to multiplayer.html when Multiplayer button is clicked
+            $("#multiplayer-btn").click(function() {
+                window.location.href = "multiplayer.html";
+            });
+
+            // Ensure background music plays on every page load
+            backgroundMusic.play();
+        });
+    </script>
+</body>
+</html>

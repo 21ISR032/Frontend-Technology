@@ -1,0 +1,240 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        outline: none;
+    }
+ body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: whitesmoke;
+}
+
+.topnav {
+  position: relative;
+  overflow: hidden;
+  background-color: #b9c4ef;
+}
+
+.topnav a {
+  float: left;
+  color: #0d0c0c;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #b9c4ef;
+  color: rgb(4, 3, 3);
+  font-weight: bold;
+}
+
+.topnav-centered a {
+  float: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.topnav-right {
+  float: right;
+}
+@media screen and (max-width: 600px) {
+  .topnav a, .topnav-right {
+    float: none;
+    display: block;
+  }
+  .topnav-centered a {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
+}
+header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .box-below-navbar {
+      text-align: center;
+      padding: 4px;
+      background-color:#228B22;
+    }
+     .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 15vh; 
+    }
+    .center-container img {
+      margin: -60px;
+      max-width: 90%; 
+      height: auto;
+    }
+    .desc{
+      justify-content: center;
+      display: flex;
+      margin: 5px;
+      font-size: 15px; 
+    }
+    .menu{
+        width: 100%;
+    }
+    select{
+        width: 500px;
+        margin-left:450px ;
+        height: 50px;
+        align-items: center;
+        padding: 15px;
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+        border-radius: 8px;
+        border: 2px solid grey;
+        box-shadow: none;
+        align-items: center;
+        background-position: 95% 95%;
+        background-size: 22px;
+    }
+    .Content{
+        /* margin: 5px;
+        width: 1450px;*/
+        height: 40px; 
+        text-align: center;
+      margin-top: 160px; 
+      background-color: skyblue; 
+      padding: 5px;
+    }
+    .centered-box {
+      text-align: left;
+      padding: 15px;
+      width: 150px;
+      margin-left: 450px;
+    }
+    footer {
+      background-color: #7d9ee7;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    .image-container {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-right: 20px; 
+    }
+   
+
+</style>
+</head>
+<body>
+    <div class="topnav">
+        <div class="topnav-centered">
+          <a href="#" class="active">8:15 AM</a>
+        </div>
+        <a href="#">iPod</a>
+        <a href="#"><img src="wifi.png" width="30" height="50"></a>
+        <div class="topnav-right">
+          <a href="#"><img src="battery.png" alt=""width="20px"></a>
+        </div>
+      </div>
+      <div class="box-below-navbar">
+      </div>
+      <p id="choose"></p>
+      <div class="center-container">
+        <img src="https://3.imimg.com/data3/EX/CU/MY-11001213/jquery-mobile-development.gif" alt="Centered Image"width="200">
+      </div>
+<div class="desc"> <b>A Touch-Optimized Web Framework</b></div>
+<div class="desc"id="breakHere"><b>for Smartphone & Tablets</b></div>
+
+<div class="wrapper">
+    <div class="centered-box">
+        <h3>Overview</h3>
+      </div>
+
+    <div class="menu">
+        <select name="" id="name">
+            <option value="">Intro to jQuery Mobile</option>
+        </select><br>
+        <select name="" id="name">
+            <option value="">Features</option>
+        </select><br>
+        <select name="" id="name">
+            <option value="">Accessibility</option>
+        </select><br>
+        <select name="" id="name">
+            <option value="">Supported platforms</option>
+        </select><br>
+    </div>
+</div>
+<footer>
+  <div class="image-container">
+    <img src="back.png" alt="Image 1" width="20">
+    <img src="front.png" alt="Image 2" width="20">
+    <img src="share.png" alt="Image 2" width="20">
+    <img src="book.jpg" alt="Image 2" width="20">
+    <img src="copy.png" alt="Image 2" width="20">
+  </div>
+  </footer>
+<script>
+    $(document).ready(function(){
+      $("button").click(function(){
+        $("img").attr("width", "500");
+         $("input:text").val("KEC");
+         $(".center-container img").css({
+          "margin": "auto",
+          "display": "block"
+        });
+        $.get("navbar.html", function(data) {
+      $("body").prepend(data);
+      $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        if (scroll > 50) {
+          $(".navbar").css("box-shadow", "0px 4px 8px green");
+        } else {
+          $(".navbar").css("box-shadow", "green");
+        }
+      });
+    });
+      });
+      $(".box-below-navbar").css({
+      "margin-top": "0px",
+       });
+      $(".center-container, .desc").css("margin-top", "50px");
+      $(".desc").css("margin-top", "10px");
+      $("#breakHere").after("<br>");
+  
+      $(".centered-box").css({
+      "background-color": "#7d9ee7",
+      "width": "500px",
+      "border-radius": "10px"});
+      $(".wrapper").css("margin-top", "10px"); 
+      $("footer").css("background-color", "#7d9ee7"); 
+      $("img:not(:last-child)").css("margin-right", "30px");
+    });
+    </script>
+</body>
+</html>

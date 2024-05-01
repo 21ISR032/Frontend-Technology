@@ -1,0 +1,289 @@
+<!-- HTML file (index.html) -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Rock Paper Scissors Game - Multiplayer</title>
+     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0; /* Adjusted to remove default margin */
+            padding: 0;
+            background-color: white;
+            background-image: url('bg1.avif');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #220030;
+            color: white;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+    color: white; 
+    margin-left: 20px;
+    text-decoration: none;
+}
+        .game-container {
+            margin-top: 60px; /* Adjusted to create space for the navbar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 400px; /* Adjust width as needed */
+        }
+        .circle-container {
+            position: relative;
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .choice {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            transition: filter 0.3s ease-in-out; /* Add transition effect */
+        }
+        .choice:hover {
+            filter: brightness(1.2); /* Change brightness on hover */
+        }
+        .header {
+            background-color: #220030;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            width: 100%;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            display: none; 
+            color: white;
+        }
+        #player-turn-header {
+    color: white;
+    font-size: 24px; 
+}
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1; /* Ensure the video is above other elements */
+        }
+        .sound-toggle {
+            cursor: pointer;
+        }
+        #scoreboard {
+    position: fixed; /* Keep the scoreboard in a fixed position on the page */
+    top: 50%; /* Center the scoreboard vertically */
+    right: 10px; /* Position the scoreboard 10px away from the right edge */
+    transform: translateY(-50%); /* Vertically center the scoreboard */
+    padding: 20px; /* Increase padding inside the scoreboard for more space */
+    background-color: rgba(255, 255, 255, 0.8); /* Add a white background with slight transparency */
+    border-radius: 10px; /* Add a border radius for rounded corners */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow for depth */
+    width: 300px; /* Set a fixed width for the scoreboard */
+    height: auto; /* Allow the height to adjust automatically based on content */
+    font-size: 1.5em; /* Increase the font size */
+}
+
+/* Style for the scoreboard table */
+#scoreboard table {
+    width: 100%; /* Make the table take up the full width of the scoreboard */
+    border-collapse: collapse; /* Remove spacing between table cells */
+}
+
+#scoreboard td {
+    padding: 10px; /* Add padding around the table cells */
+    text-align: left; /* Align text to the left */
+}
+    </style>
+</head>
+
+<body ng-app="rpsGameApp" ng-controller="GameController as gameCtrl">
+    <div class="navbar">
+        <h1>Rock Paper Scissors Game</h1>
+        <a href="ex8.html">Home</a>
+    </div>
+
+    <div class="game-container">
+        <div id="player-turn-header">
+            <p>{{ gameCtrl.currentPlayerTurn }}'s Turn</p>
+        </div>
+
+        <!-- Player choices -->
+        <div class="circle-container">
+            <img src="s1.png" class="choice" data-choice="scissors" alt="" ng-click="gameCtrl.makeChoice('scissors')">
+            <img src="p1.png" class="choice" data-choice="paper" alt="" ng-click="gameCtrl.makeChoice('paper')">
+            <img src="rock_f-01.png" class="choice" data-choice="rock" alt="" ng-click="gameCtrl.makeChoice('rock')">
+        </div>
+
+        <!-- Display current player scores -->
+
+
+        <!-- Display the game result -->
+        <div id="result">
+            <p>{{ gameCtrl.result }}</p>
+        </div>
+    </div>
+
+    <div id="scoreboard">
+        <h2>Scoreboard</h2>
+        <table>
+            <tr>
+                <td>Player 1 Score: </td>
+                <td>{{ gameCtrl.player1Score }}</td>
+            </tr>
+            <tr>
+                <td>Player 2 Score: </td>
+                <td>{{ gameCtrl.player2Score }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- AngularJS and app script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        // JavaScript file (app.js)
+var rpsGameApp = angular.module('rpsGameApp', []);
+
+// Create the game service
+rpsGameApp.service('gameService', function () {
+    var service = this;
+
+    // Variables to store player scores
+    service.player1Score = 0;
+    service.player2Score = 0;
+
+    // Variables to store player choices
+    service.player1Choice = '';
+    service.player2Choice = '';
+
+    // Variable to store the result of each round
+    service.result = '';
+
+    // Function to update the player's choice
+    service.makeChoice = function (choice, currentPlayer) {
+        if (currentPlayer === 'Player 1') {
+            service.player1Choice = choice;
+        } else {
+            service.player2Choice = choice;
+        }
+
+        // If both players have made their choices, evaluate the result
+        if (service.player1Choice && service.player2Choice) {
+            service.evaluateResult();
+        }
+    };
+
+    // Function to evaluate the result of the game
+    service.evaluateResult = function () {
+        var p1Choice = service.player1Choice;
+        var p2Choice = service.player2Choice;
+
+        // Check if the choices result in a draw
+        if (p1Choice === p2Choice) {
+            service.result = "It's a draw!";
+        } else if (
+            (p1Choice === "rock" && p2Choice === "scissors") ||
+            (p1Choice === "paper" && p2Choice === "rock") ||
+            (p1Choice === "scissors" && p2Choice === "paper")
+        ) {
+            service.player1Score++;
+            service.result = "Player 1 wins!";
+        } else {
+            service.player2Score++;
+            service.result = "Player 2 wins!";
+        }
+
+        // Reset the choices
+        service.player1Choice = '';
+        service.player2Choice = '';
+
+        // Check if a player has won the game
+        service.checkGameOver();
+    };
+
+    // Function to check if the game is over
+    service.checkGameOver = function () {
+        var maxScore = 5;
+
+        if (service.player1Score === maxScore || service.player2Score === maxScore) {
+            service.result = "Game Over! " + (service.player1Score === maxScore ? "Player 1" : "Player 2") + " wins the game!";
+            alert(service.result);
+            window.location.reload();
+        }
+    };
+});
+
+// Create the game controller and inject the game service
+rpsGameApp.controller('GameController', ['gameService', function (gameService) {
+    var gameCtrl = this;
+
+    // Initialize variables from the service
+    gameCtrl.player1Score = gameService.player1Score;
+    gameCtrl.player2Score = gameService.player2Score;
+    gameCtrl.currentPlayerTurn = "Player 1";
+    gameCtrl.result = gameService.result;
+
+    // Function to make a choice
+    gameCtrl.makeChoice = function (choice) {
+        gameService.makeChoice(choice, gameCtrl.currentPlayerTurn);
+        
+        // Update scores and result in the controller from the service
+        gameCtrl.player1Score = gameService.player1Score;
+        gameCtrl.player2Score = gameService.player2Score;
+        gameCtrl.result = gameService.result;
+
+        // Switch player turn
+        gameCtrl.currentPlayerTurn = gameCtrl.currentPlayerTurn === "Player 1" ? "Player 2" : "Player 1";
+    };
+}]);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            background-image: url('bg1.avif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative; /* Added */
+        }
+        .circle-container {
+            position: relative;
+            margin-top: 100px;
+            width: 200px;
+            height: 200px;
+        }
+        .choice {
+            border-radius: 50%;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            transform-origin: center center;
+            transition: filter 0.3s ease-in-out; /* Add transition effect */
+        }
+        .choice:hover {
+            filter: brightness(1.2); /* Change brightness on hover */
+        }
+        .choice:nth-child(1) {
+            transform: rotate(0deg) translate(100px) rotate(0deg);
+        }
+        .choice:nth-child(2) {
+            transform: rotate(120deg) translate(100px) rotate(-120deg);
+        }
+        .choice:nth-child(3) {
+            transform: rotate(240deg) translate(100px) rotate(-240deg);
+        }
+        .header {
+            background-color: #220030;
+            color: #fff;
+            text-align: center;
+            padding: 30px;
+            margin-left: -350%;
+            font-weight: bold;
+            width: 800%;
+            height: 500%;
+            box-sizing: border-box;
+        }
+        #game-container {
+            margin-top: -60px;
+            text-align: center;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            display: none; 
+            color: white;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: fixed; /* Changed to fixed */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #220030;
+            color: white;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            z-index: 1000; /* Changed to higher value */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sound-toggle {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Rock Paper Scissors Game</h1>
+            <a href="home.html">Home</a>
+            <!-- <audio id="background-music" autoplay loop>
+                <source src="bg.mp3" type="audio/mpeg">
+            </audio> -->
+    </div>
+    <div id="game-container"> 
+        <div>
+
+            <div class="circle-container">
+                <img src="s1.png" class="choice" data-choice="scissors" alt="">
+                <img src="p1.png" class="choice" data-choice="paper" alt="">
+                <img src="rock_f-01.png" class="choice" data-choice="rock" alt="">
+            </div>
+        </div>
+        <div id="result"></div>
+    </div>
+    <video id="game-end-video" style="display: none;" controls autoplay>
+        <source src="gameover2.mp4" type="video/mp4">
+    </video>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var backgroundMusic = document.getElementById("background-music");
+        var musicPaused = false;
+        function toggleBackgroundMusic() {
+            if (musicPaused) {
+                backgroundMusic.play();
+            } else {
+                backgroundMusic.pause();
+            }
+            musicPaused = !musicPaused; 
+        }
+    
+        $(".choice").click(function() {
+            var playerChoice = $(this).data("choice");
+            var game = new RockPaperScissors();
+            game.setPlayerMove(playerChoice);
+            var result = game.play();
+            switch (result) {
+                case Result.PLAYER_WIN:
+                    $("#result").html("You win!").fadeIn("slow").delay(1000).fadeOut("slow");
+                    playSound("sound-win");
+                    break;
+                case Result.COMPUTER_WIN:
+                    $("#result").html("Computer wins!").fadeIn("slow").delay(1000).fadeOut("slow");
+                    playSound("sound-lose");
+                    break;
+                case Result.DRAW:
+                    $("#result").html("It's a draw!").fadeIn("slow").delay(1000).fadeOut("slow");
+                    playSound("sound-draw");
+                    break;
+            }
+            // Hide game elements and show the end video after a delay
+            setTimeout(function() {
+                $("#game-container").hide();
+                $("#game-end-video").show();
+                $("#game-end-video")[0].play(); // Play the video
+            }, 2000); // Adjust the delay as needed
+        });
+    
+        // Redirect back to the game page after the video ends
+        $("#game-end-video").on('ended', function() {
+            window.location.href = "singleplayer.html"; // Change this to your actual game page URL
+        });
+    
+        $(".sound-toggle").click(function() {
+            toggleBackgroundMusic();
+            var soundSpan = $("#sound-status");
+            soundSpan.text(musicPaused ? "ON" : "OFF");
+        });
+    
+        function playSound(soundId) {
+            var sound = document.getElementById(soundId);
+            sound.play();
+        }
+    
+        var Move;
+        (function (Move) {
+            Move["ROCK"] = "rock";
+            Move["PAPER"] = "paper";
+            Move["SCISSORS"] = "scissors";
+        })(Move || (Move = {}));
+        
+        var Result;
+        (function (Result) {
+            Result[Result["PLAYER_WIN"] = 0] = "PLAYER_WIN";
+            Result[Result["COMPUTER_WIN"] = 1] = "COMPUTER_WIN";
+            Result[Result["DRAW"] = 2] = "DRAW";
+        })(Result || (Result = {}));
+        
+        var RockPaperScissors = /** @class */ (function () {
+            function RockPaperScissors() {
+                this.playerMove = Move.ROCK; 
+            }
+            RockPaperScissors.prototype.setPlayerMove = function (move) {
+                this.playerMove = move;
+            };
+            RockPaperScissors.prototype.generateComputerMove = function () {
+                var moves = [Move.ROCK, Move.PAPER, Move.SCISSORS];
+                var randomIndex = Math.floor(Math.random() * 3);
+                return moves[randomIndex];
+            };
+            RockPaperScissors.prototype.play = function () {
+                var computerMove = this.generateComputerMove();
+                if (this.playerMove === computerMove) {
+                    return Result.DRAW;
+                }
+                else if ((this.playerMove === Move.ROCK && computerMove === Move.SCISSORS) ||
+                    (this.playerMove === Move.PAPER && computerMove === Move.ROCK) ||
+                    (this.playerMove === Move.SCISSORS && computerMove === Move.PAPER)) {
+                    return Result.PLAYER_WIN;
+                }
+                else {
+                    return Result.COMPUTER_WIN;
+                }
+            };
+            return RockPaperScissors;
+        }());
+        
+        $(".choice").hover(function() {
+            $(this).css("filter", "brightness(1.2)"); 
+        }, function() {
+            $(this).css("filter", "brightness(1)"); 
+        });
+        
+
+
+    </script>
+    
+    
+     <audio id="sound-win">
+        <source src="win.mp3" type="audio/mpeg"></audio>
+
+    <audio id="sound-lose">
+        <source src="lose.wav" type="audio/mpeg"></audio>
+
+    <audio id="sound-draw">
+        <source src="draw.mp3" type="audio/mpeg">
+    </audio>
+</body>
+</html>

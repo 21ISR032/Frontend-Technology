@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        *{
+	padding: 0;
+	margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body{
+  background-color: yellowgreen;
+}
+
+        #loginForm {
+            height: 31.25em;
+    width: 31.25em;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+        }
+#form{
+    width: 23.75em;
+    height: 18.75em;
+    background-color: white;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: calc(50% + 3.1em);
+    left: 50%;
+    padding: 0 3.1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 0.5em;
+}
+.label{
+	display: block;
+    margin-bottom: 0.2em;
+    font-weight: 600;
+    color: black;
+}
+.title {
+    margin-bottom: 20px;
+}
+#form input{
+    font-size: 0.95em;
+    font-weight: 400;
+    color: black;
+    padding: 0.1em;
+    border: none;
+    border-bottom: 0.10em solid black;
+    outline: none;
+}
+#form .font{
+	font-size: 13px;
+  font-weight: bold;
+	color: black;
+	margin: 1px 0;
+} 
+        #loginButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loginForm">
+    
+    <form id="form">
+        <div class="title">
+            <h2 align="center">Rock Papper Scissor</h2>
+        </div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <br>
+
+        <button type="button" id="loginButton">Login</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('loginButton').addEventListener('click', function () {
+        // Simple validation for demo purposes
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        if (username === 'nivetha' && password === '123456') {
+            alert('Login successful! Redirecting to the next page.');
+            // Replace 'next-page.html' with the actual URL of your next page
+            window.location.href = 'index.html';
+        } else {
+            alert('Invalid username or password. Please try again.');
+        }
+    });
+</script>
+
+</body>
+</html>
